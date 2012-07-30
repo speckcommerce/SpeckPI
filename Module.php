@@ -21,6 +21,28 @@ class Module implements AutoloaderProviderInterface
         );
     }
 
+    public function getServiceConfig()
+    {
+        return array(
+            'factories' => array(
+                'SpeckPI\Service\PIService' => function($sm) {
+                    $service = new Service\PIService;
+                    $service->setPIMapper($sm->get('SpeckCart\Mapper\PIMapper'))
+                        ->setEventManager($sm->get('EventManager'))
+                        ->attachDefaultListeners();
+
+                    return $service;
+                },
+
+                'SpeckPI\Mapper\PIMapper' => function($sm) {
+                    $mapper = new Mapper\PIMapper;
+                    $mapper->setDbAdapter($sm->get('speckcart_db_adapter'));
+                    return $mapper;
+                },
+            ),
+        );
+    }
+
     public function getConfig()
     {
         return include __DIR__ . '/config/module.config.php';
