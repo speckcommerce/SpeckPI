@@ -2,6 +2,8 @@
 
 namespace SpeckPI;
 
+use SpeckCart\Service\CartEvent;
+
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\Mvc\ModuleRouteListener;
 
@@ -27,10 +29,7 @@ class Module implements AutoloaderProviderInterface
             'factories' => array(
                 'SpeckPI\Service\PIService' => function($sm) {
                     $service = new Service\PIService;
-                    $service->setPIMapper($sm->get('SpeckPI\Mapper\PIMapper'))
-                        ->setEventManager($sm->get('EventManager'))
-                        ->attachDefaultListeners();
-
+                    $service->setPIMapper($sm->get('SpeckPI\Mapper\PIMapper'));
                     return $service;
                 },
 
@@ -50,10 +49,12 @@ class Module implements AutoloaderProviderInterface
 
     public function onBootstrap($e)
     {
-        // You may not need to do this if you're doing it elsewhere in your
-        // application
-        $eventManager        = $e->getApplication()->getEventManager();
-        $moduleRouteListener = new ModuleRouteListener();
-        $moduleRouteListener->attach($eventManager);
+        $sm = $e->getApplication()->getServiceManager();
+
+        $piService = $sm->get('SpeckPI\Service\PIService');
+        $cartService = $sm->get('SpeckCart\Service\CartService');
+        $events = $cartService->getEventManager();
+
+        $events->attach(CartEvent::EVENT_ADD_ITEM_POST, array($piService, 'postAddItem'));
     }
 }

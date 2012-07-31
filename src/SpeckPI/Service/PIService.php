@@ -7,7 +7,6 @@ use SpeckCart\Service\CartEvent;
 class PIService
 {
     protected $piMapper;
-    protected $eventManager;
 
     public function postAddItem(CartEvent $e)
     {
@@ -30,8 +29,7 @@ class PIService
 
     public function attachDefaultListeners()
     {
-        $events = $this->getEventManager();
-        $events->attach(CartEvent::EVENT_ADD_ITEM_POST, array($this, 'postAddItem'));
+        $events = $this->getSharedManager();
     }
 
     public function getPIMapper()
@@ -42,17 +40,6 @@ class PIService
     public function setPIMapper($piMapper)
     {
         $this->piMapper = $piMapper;
-        return $this;
-    }
-
-    public function getEventManager()
-    {
-        return $this->eventManager;
-    }
-
-    public function setEventManager($eventManager)
-    {
-        $this->eventManager = $eventManager;
         return $this;
     }
 }
