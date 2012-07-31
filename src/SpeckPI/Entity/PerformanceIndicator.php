@@ -43,7 +43,7 @@ class PerformanceIndicator
 
     public function getValue()
     {
-        if ($type === self::TYPE_INT) {
+        if ($this->type === self::TYPE_INT) {
             return intval($this->value);
         }
 

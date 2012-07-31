@@ -27,7 +27,7 @@ class Module implements AutoloaderProviderInterface
             'factories' => array(
                 'SpeckPI\Service\PIService' => function($sm) {
                     $service = new Service\PIService;
-                    $service->setPIMapper($sm->get('SpeckCart\Mapper\PIMapper'))
+                    $service->setPIMapper($sm->get('SpeckPI\Mapper\PIMapper'))
                         ->setEventManager($sm->get('EventManager'))
                         ->attachDefaultListeners();
 

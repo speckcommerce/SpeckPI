@@ -11,15 +11,21 @@ class PIService
 
     public function postAddItem(CartEvent $e)
     {
-        if (!$e->hasParam('performance_indicators')) {
+        if (!$e->getParam('performance_indicators')) {
             return;
         }
 
         $indicators = $e->getParam('performance_indicators');
 
         foreach ($indicators as $i) {
+            $i->setItemId($e->getCartItem()->getCartItemId());
             $this->getPIMapper()->persist($i);
         }
+    }
+
+    public function findByItem($itemId)
+    {
+        return $this->getPIMapper()->findByItemId($itemId);
     }
 
     public function attachDefaultListeners()
