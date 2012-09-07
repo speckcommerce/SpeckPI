@@ -59,7 +59,7 @@ class PIMapper extends AbstractDbMapper
 
     protected function selectMany($select)
     {
-        $resultSet = $this->selectWith($select);
+        $resultSet = $this->select($select);
 
         $return = array();
         foreach ($resultSet as $r) {
