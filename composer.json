@@ -1,0 +1,21 @@
+{
+    "name": "speckcommerce/speck-p-i",
+    "description": "",
+    "type": "library",
+    "keywords": [
+        "zf2"
+    ],
+    "homepage": "http://github.com/speckcommerce/SpeckPI",
+    "authors": [
+    ],
+    "require": {
+    },
+    "autoload": {
+        "psr-0": {
+            "SpeckPI": "src/"
+        },
+        "classmap": [
+            "./"
+        ]
+    }
+}
