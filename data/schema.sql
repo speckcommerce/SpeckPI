@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS `cart_item_index` (
   PRIMARY KEY (`item_id`,`key`),
   KEY `int_string` (`key`,`value_string`),
   KEY `int_index` (`key`,`value_int`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ALTER TABLE `cart_item_index`
   ADD CONSTRAINT `cart_item_index_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `cart_item` (`item_id`);
